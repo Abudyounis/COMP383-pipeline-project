@@ -24,5 +24,5 @@ This repo follows the Snakemake tutorial directory layout:
   - `data/samples/` — FASTQ inputs named `{sample}.fastq`
 - `mapped_reads/` — BAM outputs from bwa mapping (`{sample}.bam`)
 - `sorted_reads/` — sorted BAM outputs and BAM indexes (`{sample}.bam`, `{sample}.bam.bai`)
-- `calls/` — variant calling outputs
 - `scripts/` — Python scripts used by Snakemake rules
+
