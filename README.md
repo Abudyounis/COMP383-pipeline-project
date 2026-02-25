@@ -25,3 +25,4 @@ This repo follows the Snakemake tutorial directory layout:
 - `mapped_reads/` — BAM outputs from bwa mapping (`{sample}.bam`)
 - `sorted_reads/` — sorted BAM outputs and BAM indexes (`{sample}.bam`, `{sample}.bam.bai`)
 - `scripts/` — Python scripts used by Snakemake rules
+
