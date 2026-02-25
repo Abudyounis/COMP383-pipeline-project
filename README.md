@@ -15,3 +15,14 @@ This repo contains a Snakemake pipeline that automates COMP383 Pipeline Project 
 - spades.py
 - blast+ (makeblastdb, blastn)
 - biopython
+# Project structure
+This repo follows the Snakemake tutorial directory layout:
+
+- `Snakefile` — Snakemake workflow (rules)
+- `data/` — input data
+  - `data/genome.fa` — reference genome FASTA used by bwa
+  - `data/samples/` — FASTQ inputs named `{sample}.fastq`
+- `mapped_reads/` — BAM outputs from bwa mapping (`{sample}.bam`)
+- `sorted_reads/` — sorted BAM outputs and BAM indexes (`{sample}.bam`, `{sample}.bam.bai`)
+- `calls/` — variant calling outputs
+- `scripts/` — Python scripts used by Snakemake rules
