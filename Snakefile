@@ -2,12 +2,18 @@ SAMPLES = ["SRR5660030", "SRR5660033", "SRR5660044", "SRR5660045"]
 READS_DIR = "data/test_reads"
 REF = "data/genome/genome.fa"
 
+#Betaherpesvirinae download/build settings (NCBI datasets)
+BETAHERPES_TAXID = "10357"  # Betaherpesvirinae
+BETAHERPES_ZIP = "data/blastdb/betaherpes_datasets.zip"
+BETAHERPES_DIR = "data/blastdb/betaherpes_datasets"
+BETAHERPES_FASTA = "data/blastdb/betaherpes.fna"
+BLAST_DB_PREFIX = "data/blastdb/betaherpes"
+
 rule all:
     input:
         "Younis_PipelineReport.txt"
 
 # Step 2: Bowtie2 filtering + counts
-
 
 rule bowtie2_index:
     input:
@@ -42,6 +48,7 @@ rule bowtie2_filter:
         --al-conc filtered_reads/{wildcards.sample}_%.fastq \
         -S /dev/null
         """
+
 rule count_after:
     input:
         r1="filtered_reads/{sample}_1.fastq",
@@ -51,9 +58,7 @@ rule count_after:
     shell:
         "echo $(( $(wc -l < {input.r1}) / 4 )) > {output}"
 
-
 # Step 3: SPAdes assembly (k=99)
-
 
 rule spades:
     input:
@@ -68,7 +73,6 @@ rule spades:
 
 # Step 4: Contig stats (>1000 bp)
 
-
 rule contig_stats:
     input:
         "assemblies/{sample}/contigs.fasta"
@@ -78,14 +82,47 @@ rule contig_stats:
         "python3 scripts/contig_stats.py {input} > {output}"
 
 # Step 5: Longest contig + BLAST (top 5, best HSP only)
+# --- AUTOMATED Betaherpes FASTA using NCBI datasets ---
+
+rule download_betaherpes_datasets:
+    output:
+        BETAHERPES_ZIP
+    shell:
+        """
+        mkdir -p data/blastdb
+        datasets download virus genome taxon {BETAHERPES_TAXID} --include genome --filename {output}
+        """
+
+rule unzip_betaherpes_datasets:
+    input:
+        BETAHERPES_ZIP
+    output:
+        directory(BETAHERPES_DIR)
+    shell:
+        """
+        rm -rf {output}
+        mkdir -p {output}
+        unzip -q {input} -d {output}
+        """
+
+rule build_betaherpes_fasta:
+    input:
+        BETAHERPES_DIR
+    output:
+        BETAHERPES_FASTA
+    shell:
+        """
+        # concatenate all genome FASTAs from datasets into one file
+        find {input} -type f -name "*.fna" -print0 | sort -z | xargs -0 cat > {output}
+        """
 
 rule make_blast_db:
     input:
-        "data/blastdb/betaherpes.fna"
+        BETAHERPES_FASTA
     output:
-        "data/blastdb/betaherpes.nsq"
+        BLAST_DB_PREFIX + ".nsq"
     shell:
-        "makeblastdb -in {input} -out data/blastdb/betaherpes -title betaherpes -dbtype nucl"
+        "makeblastdb -in {input} -out {BLAST_DB_PREFIX} -title betaherpes -dbtype nucl"
 
 rule longest_contig:
     input:
@@ -97,18 +134,17 @@ rule longest_contig:
 
 rule blast_top5:
     input:
-        db="data/blastdb/betaherpes.nsq",
+        db=BLAST_DB_PREFIX + ".nsq",
         query="blast/{sample}.longest.fasta"
     output:
         "blast/{sample}.top5.tsv"
     shell:
-        "blastn -query {input.query} -db data/blastdb/betaherpes "
+        "blastn -query {input.query} -db {BLAST_DB_PREFIX} "
         "-max_hsps 1 -max_target_seqs 5 "
         "-outfmt '6 sacc pident length qstart qend sstart send bitscore evalue stitle' "
         "> {output}"
 
 # Final: PipelineReport.txt
-
 
 rule report:
     input:
