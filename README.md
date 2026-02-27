@@ -19,7 +19,7 @@ Steps 2–5 are fully automated using Snakemake.
 
 All file paths are relative so the pipeline can run on any system after cloning the repository.
 
----
+
 
 # Repository Structure
 
@@ -51,7 +51,6 @@ data/blastdb/
 .snakemake/
 *.bt2
 
----
 
 # Required Software
 
@@ -66,7 +65,7 @@ You need the following installed:
 - unzip
 - Biopython  
 
----
+
 
 # Installing Software
 
@@ -83,7 +82,7 @@ pip install biopython
 
 
 
----
+
 
 # Step 1: Download and Convert Reads (Manual Step)
 
@@ -106,7 +105,7 @@ fasterq-dump --split-files SRR5660045
 
 cd ../..  
 
----
+
 
 # Create Small Test FASTQs (Committed to GitHub)
 
@@ -120,7 +119,7 @@ done
 
 The pipeline defaults to using test_reads.
 
----
+
 
 # Running the Pipeline (on the Test Data)
 This single command executes the full workflow from Bowtie2 filtering through BLAST and making the final report.
@@ -145,7 +144,7 @@ Younis_PipelineReport.txt
 
 Runtime: < 2 minutes using test_reads.
 
----
+
 
 # Running with Full Data
 
@@ -165,7 +164,7 @@ snakemake --cores 8 -p
 
 (Could use 8 cores on a MacBook Air M4 for faster performance if you have a lot of RAM)
 
----
+
 
 # Automated Betaherpesvirinae Database
 
@@ -180,7 +179,7 @@ data/blastdb/betaherpes.fna
 Then a local BLAST database is created using makeblastdb.
 
 
----
+
 
 # Final Output
 
@@ -192,6 +191,7 @@ The final file Younis_PipelineReport.txt contains:
 - Top 5 BLAST hits for longest contig (best HSP only)  
 
 This file is generated automatically by running Snakemake
+
 
 
 
