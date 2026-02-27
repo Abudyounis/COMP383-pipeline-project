@@ -32,7 +32,7 @@ BLAST_DB_PREFIX = "data/blastdb/betaherpes"
 # When run snakemake it tries to build everything needed to create these.
 rule all:
     input:
-        "Younis_PipelineReport.txt"
+        "PipelineReport.txt"
 
 
 # Step 2: Bowtie2 filtering + counts
@@ -231,7 +231,7 @@ rule report:
         stats=expand("assemblies/{sample}/stats.txt", sample=SAMPLES),
         top5=expand("blast/{sample}.top5.tsv", sample=SAMPLES)
     output:
-        "Younis_PipelineReport.txt"
+        "PipelineReport.txt"
     shell:
         #builds the final report by looping over sample IDs in bash.
         # It writes:
