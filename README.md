@@ -1,51 +1,189 @@
-# COMP383 Python Snakemake Pipeline Project
 
 # Overview
-This repo contains a Snakemake pipeline that automates COMP383 Pipeline Project steps:
-- Bowtie2 mapping/filtering to HCMV reference
-- SPAdes assembly (k=99)
-- Assembly contig stats (>1000 bp) and total bp
-- Longest contig BLAST against a local Betaherpesvirinae database
-- Writes results to `results/reports/PipelineReport.txt`
 
-# Required tools:
-- snakemake
-- python3
-- bowtie2
-- spades.py
-- blast+ (makeblastdb, blastn)
-- biopython
-# Project structure
-This repo follows the Snakemake tutorial directory layout:
+This repository contains a fully automated Snakemake pipeline for analyzing HCMV RNA-seq data from four SRA samples.
 
-- `Snakefile` — Snakemake workflow (rules)
-- `data/` — input data
-  - `data/genome.fa` — reference genome FASTA used by bwa
-  - `data/samples/` — FASTQ inputs named `{sample}.fastq`
-- `mapped_reads/` — BAM outputs from bwa mapping (`{sample}.bam`)
-- `sorted_reads/` — sorted BAM outputs and BAM indexes (`{sample}.bam`, `{sample}.bam.bai`)
-- `scripts/` — Python scripts used by Snakemake rules
+The pipeline performs:
 
-# Step 1: Download and convert reads (manual)
-We downloaded and converted the following SRA runs to paired-end FASTQ using `fasterq-dump --split-files`:
+1. Bowtie2 mapping to the HCMV reference genome  
+2. Read counts before and after filtering  
+3. SPAdes assembly (k=99)  
+4. Contig statistics (>1000 bp and total bp)  
+5. Extraction of the longest contig  
+6. BLAST of the longest contig against a locally built Betaherpesvirinae database  
+7. Final summary written to:
 
-- SRR5660030 (Donor 1, 2dpi)
-- SRR5660033 (Donor 1, 6dpi)
-- SRR5660044 (Donor 3, 2dpi)
-- SRR5660045 (Donor 3, 6dpi)
+Younis_PipelineReport.txt
+
+Steps 2–5 are fully automated using Snakemake.
+
+No full paths are hardcoded.
+
+---
+
+# Repository Structure
+
+Snakefile  
+README.md  
+scripts/  
+    contig_stats.py  
+    longest_contig.py  
+data/  
+    genome/  
+        genome.fa  
+    test_reads/  
+        SRR5660030_1.fastq  
+        SRR5660030_2.fastq  
+        SRR5660033_1.fastq  
+        SRR5660033_2.fastq  
+        SRR5660044_1.fastq  
+        SRR5660044_2.fastq  
+        SRR5660045_1.fastq  
+        SRR5660045_2.fastq  
+
+The following folders are generated automatically when running the pipeline:
+
+counts/  
+filtered_reads/  
+assemblies/  
+blast/  
+data/blastdb/  
+
+---
+
+# Required Software
+
+You need the following installed:
+
+- python3  
+- snakemake  
+- bowtie2  
+- spades  
+- blast+ (makeblastdb, blastn)  
+- NCBI datasets CLI  
+- unzip  
+
+---
+
+# Installing Software
+
+Mac (Homebrew):
+
+brew install snakemake  
+brew install bowtie2  
+brew install blast  
+brew install spades  
+brew install ncbi-datasets-cli  
+brew install unzip  
+
+
+---
+
+# Step 1: Download and Convert Reads (Manual Step)
+
+The following SRA samples were retrieved:
+
+SRR5660030 (Donor 1, 2dpi)  
+SRR5660033 (Donor 1, 6dpi)  
+SRR5660044 (Donor 3, 2dpi)  
+SRR5660045 (Donor 3, 6dpi)  
 
 Commands used:
-mkdir -p data/full_reads data/test_reads
-cd data/full_reads
-fasterq-dump --split-files SRR5660030
-fasterq-dump --split-files SRR5660033
-fasterq-dump --split-files SRR5660044
-fasterq-dump --split-files SRR5660045
-cd ../..
 
-# create small test FASTQs (committed to GitHub)
-for s in SRR5660030 SRR5660033 SRR5660044 SRR5660045
-do
-  head -n 40000 data/full_reads/${s}_1.fastq > data/test_reads/${s}_1.fastq
-  head -n 40000 data/full_reads/${s}_2.fastq > data/test_reads/${s}_2.fastq
-done
+mkdir -p data/full_reads data/test_reads  
+cd data/full_reads  
+
+fasterq-dump --split-files SRR5660030  
+fasterq-dump --split-files SRR5660033  
+fasterq-dump --split-files SRR5660044  
+fasterq-dump --split-files SRR5660045  
+
+cd ../..  
+
+---
+
+# Create Small Test FASTQs (Committed to GitHub)
+
+To allow quicker testing small subsets were created below:
+
+for s in SRR5660030 SRR5660033 SRR5660044 SRR5660045  
+do  
+  head -n 40000 data/full_reads/${s}_1.fastq > data/test_reads/${s}_1.fastq  
+  head -n 40000 data/full_reads/${s}_2.fastq > data/test_reads/${s}_2.fastq  
+done  
+
+The pipeline defaults to using test_reads.
+
+---
+
+# Running the Pipeline (on the Test Data)
+
+From the main repo directory:
+
+snakemake --cores 4 -p
+
+This will:
+
+- Build Bowtie2 index  
+- Filter reads  
+- Run SPAdes  
+- Calculate contig stats  
+- Download Betaherpesvirinae genomes automatically  
+- Build local BLAST database  
+- BLAST longest contig  
+- Generate final report  
+
+Output file:
+
+Younis_PipelineReport.txt  
+
+Runtime: < 2 minutes using test_reads.
+
+---
+
+# Running with Full Data
+
+To run with full reads instead:
+
+Open Snakefile and change:
+
+READS_DIR = "data/test_reads"
+
+to:
+
+READS_DIR = "data/full_reads" (or whatever other filename desired)
+
+Then run:
+
+snakemake --cores 8 -p
+
+(Could use 8 cores on a MacBook Air M4 for faster performance if you have a lot of RAM)
+
+---
+
+# Automated Betaherpesvirinae Database
+
+The pipeline automatically downloads viral genomes using:
+
+datasets download virus genome taxon 10357 --include genome
+
+All FASTA files are concatenated into:
+
+data/blastdb/betaherpes.fna
+
+Then a local BLAST database is created using makeblastdb.
+
+
+---
+
+# Final Output
+
+The final file Younis_PipelineReport.txt contains:
+
+- Number of read pairs before and after Bowtie2 filtering  
+- Number of contigs >1000 bp  
+- Total bp in assembly  
+- Top 5 BLAST hits for longest contig (best HSP only)  
+
+This file is generated automatically by running Snakemake
+
