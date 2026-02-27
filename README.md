@@ -17,7 +17,7 @@ Younis_PipelineReport.txt
 
 Steps 2–5 are fully automated using Snakemake.
 
-No full paths are hardcoded.
+All file paths are relative so the pipeline can run on any system after cloning the repository.
 
 ---
 
@@ -43,11 +43,13 @@ data/
 
 The following folders are generated automatically when running the pipeline:
 
-counts/  
-filtered_reads/  
-assemblies/  
-blast/  
-data/blastdb/  
+counts/
+filtered_reads/
+assemblies/
+blast/
+data/blastdb/
+.snakemake/
+*.bt2
 
 ---
 
@@ -117,7 +119,7 @@ The pipeline defaults to using test_reads.
 ---
 
 # Running the Pipeline (on the Test Data)
-
+This single command executes the full workflow from Bowtie2 filtering through BLAST and making the final report.
 From the main repo directory:
 
 snakemake --cores 4 -p
@@ -186,4 +188,5 @@ The final file Younis_PipelineReport.txt contains:
 - Top 5 BLAST hits for longest contig (best HSP only)  
 
 This file is generated automatically by running Snakemake
+
 
