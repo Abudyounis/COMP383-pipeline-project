@@ -1,7 +1,7 @@
 #https://snakemake.readthedocs.io/en/stable/tutorial/basics.html#step-1-mapping-reads
 #COMP383 Pipeline (Snakemake)
 # - runs on TEST reads by default
-# - generates Younis_PipelineReport.txt
+# - generates PipelineReport.txt (previously Younis_"")
 #below is list of sample IDs we are processing.
 #we use this so Snakemake can "expand" rules across all samples automatically
 #instead of writing the same rule 4 times.
