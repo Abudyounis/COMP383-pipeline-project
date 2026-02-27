@@ -1,0 +1,41 @@
+
+Sample SRR5660030 had 2259287 read pairs before and 1562296 read pairs after Bowtie2 filtering.
+In the assembly of sample SRR5660030, there are 46 contigs > 1000 bp and 175981 total bp.
+SRR5660030:
+sacc	pident	length	qstart	qend	sstart	send	bitscore	evalue	stitle
+EF999921.1	100.000	17556	19	17574	102890	120445	32420	0.0	EF999921.1 Human herpesvirus 5 strain TB40/E clone TB40-BAC4, complete sequence
+KF297339.1	100.000	17556	19	17574	70849	88404	32420	0.0	KF297339.1 Human herpesvirus 5 strain TB40/E clone Lisa, complete genome
+MT070140.1	100.000	17556	19	17574	70620	88175	32420	0.0	MT070140.1 UNVERIFIED: Human betaherpesvirus 5 isolate P10, complete genome
+MW439039.1	100.000	17556	19	17574	70248	87803	32420	0.0	MW439039.1 Human betaherpesvirus 5 strain TB40/EE, complete genome
+MW439038.1	100.000	17556	19	17574	70248	87803	32420	0.0	MW439038.1 Human betaherpesvirus 5 strain TB40/EF, complete genome
+
+Sample SRR5660033 had 2004530 read pairs before and 1249472 read pairs after Bowtie2 filtering.
+In the assembly of sample SRR5660033, there are 44 contigs > 1000 bp and 60906 total bp.
+SRR5660033:
+sacc	pident	length	qstart	qend	sstart	send	bitscore	evalue	stitle
+EF999921.1	99.948	3846	1	3845	69647	65802	7090	0.0	EF999921.1 Human herpesvirus 5 strain TB40/E clone TB40-BAC4, complete sequence
+KF297339.1	99.948	3846	1	3845	37606	33761	7090	0.0	KF297339.1 Human herpesvirus 5 strain TB40/E clone Lisa, complete genome
+MT070140.1	99.948	3846	1	3845	37377	33532	7090	0.0	MT070140.1 UNVERIFIED: Human betaherpesvirus 5 isolate P10, complete genome
+MT044484.1	99.948	3846	1	3845	36958	33113	7090	0.0	MT044484.1 Human betaherpesvirus 5 strain HAN-SOT4, complete genome
+MW439039.1	99.948	3846	1	3845	37005	33160	7090	0.0	MW439039.1 Human betaherpesvirus 5 strain TB40/EE, complete genome
+
+Sample SRR5660044 had 2730258 read pairs before and 1922300 read pairs after Bowtie2 filtering.
+In the assembly of sample SRR5660044, there are 59 contigs > 1000 bp and 120777 total bp.
+SRR5660044:
+sacc	pident	length	qstart	qend	sstart	send	bitscore	evalue	stitle
+EF999921.1	100.000	6077	1	6077	97830	91754	11223	0.0	EF999921.1 Human herpesvirus 5 strain TB40/E clone TB40-BAC4, complete sequence
+KF297339.1	100.000	6077	1	6077	65789	59713	11223	0.0	KF297339.1 Human herpesvirus 5 strain TB40/E clone Lisa, complete genome
+MT070140.1	100.000	6077	1	6077	65560	59484	11223	0.0	MT070140.1 UNVERIFIED: Human betaherpesvirus 5 isolate P10, complete genome
+MW439039.1	100.000	6077	1	6077	65188	59112	11223	0.0	MW439039.1 Human betaherpesvirus 5 strain TB40/EE, complete genome
+MW439038.1	100.000	6077	1	6077	65188	59112	11223	0.0	MW439038.1 Human betaherpesvirus 5 strain TB40/EF, complete genome
+
+Sample SRR5660045 had 2476889 read pairs before and 1274769 read pairs after Bowtie2 filtering.
+In the assembly of sample SRR5660045, there are 57 contigs > 1000 bp and 98562 total bp.
+SRR5660045:
+sacc	pident	length	qstart	qend	sstart	send	bitscore	evalue	stitle
+EF999921.1	99.953	4297	1	4296	167487	163191	7923	0.0	EF999921.1 Human herpesvirus 5 strain TB40/E clone TB40-BAC4, complete sequence
+KF297339.1	99.953	4297	1	4296	135446	131150	7923	0.0	KF297339.1 Human herpesvirus 5 strain TB40/E clone Lisa, complete genome
+JX512204.1	99.953	4297	1	4296	134858	130562	7923	0.0	JX512204.1 Human herpesvirus 5 strain HAN16, complete genome
+MT070140.1	99.953	4297	1	4296	135217	130921	7923	0.0	MT070140.1 UNVERIFIED: Human betaherpesvirus 5 isolate P10, complete genome
+MT044481.1	99.953	4297	1	4296	135046	130750	7923	0.0	MT044481.1 Human betaherpesvirus 5 strain GLA-SOT2, complete genome
+
