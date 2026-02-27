@@ -5,7 +5,7 @@ This repository contains a fully automated Snakemake pipeline for analyzing HCMV
 
 The pipeline performs:
 
-1. Bowtie2 mapping to the HCMV reference genome  
+1. Bowtie2 filtering (keeps mapped read pairs) to HCMV reference 
 2. Read counts before and after filtering  
 3. SPAdes assembly (k=99)  
 4. Contig statistics (>1000 bp and total bp)  
@@ -63,7 +63,8 @@ You need the following installed:
 - spades  
 - blast+ (makeblastdb, blastn)  
 - NCBI datasets CLI  
-- unzip  
+- unzip
+- Biopython  
 
 ---
 
@@ -77,6 +78,9 @@ brew install blast
 brew install spades  
 brew install ncbi-datasets-cli  
 brew install unzip  
+(for biopython)
+pip install biopython
+
 
 
 ---
@@ -188,5 +192,6 @@ The final file Younis_PipelineReport.txt contains:
 - Top 5 BLAST hits for longest contig (best HSP only)  
 
 This file is generated automatically by running Snakemake
+
 
 
