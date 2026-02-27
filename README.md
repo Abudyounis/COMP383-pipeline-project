@@ -83,11 +83,17 @@ pip install biopython
 OR Linux:
 
 sudo apt install python3 python3-pip
+
 pip3 install snakemake
+
 sudo apt install bowtie2
+
 sudo apt install spades
+
 sudo apt install ncbi-blast+
+
 sudo apt install unzip
+
 pip3 install biopython
 
 
@@ -200,6 +206,7 @@ The final file Younis_PipelineReport.txt contains:
 - Top 5 BLAST hits for longest contig (best HSP only)  
 
 This file is generated automatically by running Snakemake
+
 
 
 
